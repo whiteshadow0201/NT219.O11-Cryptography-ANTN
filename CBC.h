@@ -9,7 +9,6 @@ private:
 public:
     CBC(const std::vector<uint8_t> &initialization_vector, const std::vector<uint8_t> &key, int key_length)
         : AES(key, key_length), iv(initialization_vector) {}
-
     std::vector<uint8_t> cbc_encrypt(const std::vector<uint8_t> &plaintext)
     {
         // Apply padding
@@ -32,18 +31,16 @@ public:
             previous_block = encrypted_block;
         }
 
-        // The IV is prepended to the ciphertext for use in decryption
-        std::vector<uint8_t> ciphertext_with_iv = iv;
-        ciphertext_with_iv.insert(ciphertext_with_iv.end(), encrypted_data.begin(), encrypted_data.end());
+      
 
-        return ciphertext_with_iv;
+        return encrypted_data;
     }
 std::vector<uint8_t> cbc_decrypt(const std::vector<uint8_t>& ciphertext) {
     if (ciphertext.size() % 16 != 0) {
         throw std::invalid_argument("Ciphertext length must be a multiple of 16 bytes for CBC mode.");
     }
 
-    std::vector<uint8_t> data(ciphertext.begin() + 16, ciphertext.end());
+    std::vector<uint8_t> data(ciphertext.begin(), ciphertext.end());
 
     std::vector<uint8_t> decrypted_data;
     std::vector<uint8_t> previous_block = iv;  // Truy cập giá trị IV từ thuộc tính của lớp CBC
