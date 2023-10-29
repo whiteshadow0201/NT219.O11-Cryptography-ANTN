@@ -43,7 +43,7 @@ std::vector<uint8_t> cbc_decrypt(const std::vector<uint8_t>& ciphertext) {
     std::vector<uint8_t> data(ciphertext.begin(), ciphertext.end());
 
     std::vector<uint8_t> decrypted_data;
-    std::vector<uint8_t> previous_block = iv;  // Truy cập giá trị IV từ thuộc tính của lớp CBC
+    std::vector<uint8_t> previous_block = iv; // Initalization vector
 
     for (size_t i = 0; i < data.size(); i += 16) {
         std::vector<uint8_t> block(data.begin() + i, data.begin() + i + 16);
