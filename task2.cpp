@@ -3,11 +3,13 @@
 #include <vector>
 #include <codecvt>
 #include <locale>
+
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
 #endif
+
 #include "CBC.h"
 using namespace std;
 
@@ -57,7 +59,7 @@ int main()
     cin >> iv;
     std::vector<uint8_t> iv_hex(iv.begin(), iv.end());
     std::vector<uint8_t> iv_bytes = hexToBytes(iv);
-    CBC cbc_mode(key_bytes_128, iv_bytes, key_length);
+    CBC cbc_mode(iv_bytes,key_bytes_128,key_length);
     int choice;
     cout << "Enter 1 to encrypt and 2 to decrypt:\n>>Enter your number:  ";
     cin >> choice;
@@ -88,7 +90,7 @@ int main()
         getline(cin, ciphertext);
         std::vector<uint8_t> ciphertext_bytes = hexToBytes(ciphertext);
         std::string decrypted_text = vectorUint8ToString(cbc_mode.cbc_decrypt(ciphertext_bytes));
-        std::cout << "Decrypted Text: " << decrypted_text;
+        std::cout << "Decrypted Text: " << decrypted_text << std::endl;
     }
     }
     return 0;
